@@ -1,0 +1,52 @@
+form: flex-user_accounts
+unique_id: 53b4e6cd0157f1bda9830add9c67d7de
+url: 'https://www-new.nbis.se/admin/accounts/users'
+user:
+  username: dahlo
+  email: m.dahlo@gmail.com
+timestamps:
+  created: 1644582794
+  updated: 1644582796
+data:
+  username: nbis
+  email: nbis@dahlo.se
+  password: Nbis2022!
+  fullname: nbis
+  title: null
+  language: en
+  content_editor: default
+  twofa_enabled: false
+  twofa_secret: AAIDBYLP3DRWKZLSL3IBELVKGXAUF2SI
+  yubikey_id: null
+  access:
+    site:
+      login: true
+    admin:
+      login: true
+      super: true
+      cache: true
+      configuration: true
+      pages: true
+      maintenance: true
+      statistics: true
+      plugins: true
+      themes: true
+      tools: true
+      users: true
+      flex-objects: true
+      gantry: true
+  avatar: {  }
+  state: enabled
+  info: null
+  groups: null
+  _post_entries_save: null
+files: {  }
+object:
+  type: user-accounts
+  key: null
+  storage_key: ''
+  timestamp: 0
+  serialized:
+    __META: {  }
+    username: ''
+    state: enabled
