@@ -1,28 +1,31 @@
 #!/bin/bash
 
+set -x
+set -e
+
 # steps to generate a functional static dump of the grav site
 
-### SETTINGS ###
-GRAV_PATH="~/testarea/nginx_letsencrypt_php/html/"
-STATIC_PATH="../static"
+### SETTINGS ### (host relative paths)
+GRAV_PATH=~/testarea/nginx_letsencrypt_php/html/
+STATIC_PATH=../static
 
 # go to the web server root
 cd $GRAV_PATH
 
 # clear cache? doesnt seem to be needed
-docker exec -it -u $(id -u) nginx_letsencrypt_php_php-fpm_1 bin/grav clearcache
+#docker exec -it -u $(id -u) nginx_letsencrypt_php_php-fpm_1 bin/grav clearcache
 
-# remove old static dump to get rid of deleted files
-rm -r $STATIC_PATH/*
+# remove old static dump to get rid of deleted file (ignore failed command if static is empty)
+rm -r $STATIC_PATH/* || true
 
 # dump site to static html using blackhole plugin https://github.com/7barry/grav-plugin-blackhole
-docker exec -it -u $(id -u) nginx_letsencrypt_php_php-fpm_1 bin/plugin blackhole generate -a -d nbis-static.dahlo.se -p /static/ https://www-new.nbis.se
+docker exec -it -u $(id -u) nginx_letsencrypt_php_php-fpm_1 bin/plugin blackhole generate -a -d nbis-static.dahlo.se -p ../static/ https://www-new.nbis.se
 
 # generate index for client side searching using static generator plugin https://github.com/OleVik/grav-plugin-static-generator
-docker exec -it -u $(id -u) nginx_letsencrypt_php_php-fpm_1 bin/plugin static-generator index "/" -c /static/
+#docker exec -it -u $(id -u) nginx_letsencrypt_php_php-fpm_1 bin/plugin static-generator index "/" -c /static/
 
 # remove localhost part from url in search index
-sed -i 's/http:\\\/\\\/localhost//g' $STATIC_PATH/index.full.json
+#sed -i 's/http:\\\/\\\/localhost//g' $STATIC_PATH/index.full.json
 
 # compress json file? https://stackoverflow.com/questions/62632354/is-there-any-way-to-load-a-compressed-json-file-with-javascript
 #gzip $STATIC_PATH/index.full.json
